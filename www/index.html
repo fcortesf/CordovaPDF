@@ -1,0 +1,19 @@
+﻿<!DOCTYPE html>
+<html ng-app="pdfViewer">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta charset="utf-8" />
+    <title>PDF Viewer</title>
+    <link href="css/index.css" rel="stylesheet" />
+</head>
+<body ng-controller="viewerController">
+    <button ng-click="download()" ng-if="!downloaded" ng-disabled="downProgress">Download</button>
+    <button ng-click="show()" ng-if="downloaded">Show</button>
+    <progress ng-if="downProgress"></progress>
+    <script src="cordova.js"></script>
+    <script src="scripts/platformOverrides.js"></script>
+    <script src="scripts/angular.min.js"></script>
+    <script src="dist/pdfviewer.min.js"></script>
+
+</body>
+</html>
