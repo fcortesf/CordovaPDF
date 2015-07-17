@@ -23,7 +23,7 @@
 
             return {
                 download: function (url, fileName) {
-                    return $q(function (resolve, reject) {
+                    return $q(function (resolve, reject) {                        
                         window.resolveLocalFileSystemURL(_saveDirectory ,  function (dir) {
                             dir.getDirectory("PDF", { create: true }, function (finalDir) {
                                
@@ -43,7 +43,7 @@
                                         resolve(entry.toURL());
                                     },
                                     function (error) {
-                                        reject('error.download', error);
+                                        reject(error);
                                     },
                                     true
                                 );
