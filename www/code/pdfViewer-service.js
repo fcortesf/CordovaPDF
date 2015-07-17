@@ -13,6 +13,9 @@
             else if (device.platform === "Android") {
                 _type = "_system";
             }
+            else {
+                _type = "_system";
+            }
 
         }, false);
         return {

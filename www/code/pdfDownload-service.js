@@ -15,34 +15,43 @@
                 else if (device.platform === "Android") {
                     _saveDirectory = cordova.file.externalApplicationStorageDirectory;
                 }
+                else {
+                    _saveDirectory = cordova.file.dataDirectory;
+                }
 
             }, false);
 
             return {
                 download: function (url, fileName) {
                     return $q(function (resolve, reject) {
-                        // Checking errors
-                        if (!_fileTransfer) {
-                            reject('error.noTransfer');
-                        }
-                        if (!_saveDirectory) {
-                            reject('error.noDirectory');
-                        }
-                        // Start download
-                        var _fileURL = _saveDirectory + fileName;
-                        var _uri = encodeURI(url);
-                        _fileTransfer.download(
-                            _uri,
-                            _fileURL,
-                            function (entry) {
-                                resolve(entry.toURL());
-                            },
-                            function (error) {
-                                reject('error.download', error);                                
-                            },
-                            true
-                        );
+                        window.resolveLocalFileSystemURL(_saveDirectory ,  function (dir) {
+                            dir.getDirectory("PDF", { create: true }, function (finalDir) {
+                               
+                                if (!_fileTransfer) {
+                                    reject('error.noTransfer');
+                                }
+                                if (!_saveDirectory) {
+                                    reject('error.noDirectory');
+                                }
+                                
+                                var fileURL = _saveDirectory + fileName;
+                                var uri = encodeURI(url);
+                                _fileTransfer.download(
+                                    uri,
+                                    fileURL,
+                                    function (entry) {
+                                        resolve(entry.toURL());
+                                    },
+                                    function (error) {
+                                        reject('error.download', error);
+                                    },
+                                    true
+                                );
+                            });
+                            
+                        });
                     });
+
                 }
             }
         }]);
